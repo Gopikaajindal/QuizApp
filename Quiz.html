@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>General Knowledge Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    #quiz-container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      width: 400px;
+    }
+
+    button {
+      display: block;
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="quiz-container">
+    <h2>General Knowledge Quiz</h2>
+    <form id="quiz-form">
+      <div id="question-container"></div>
+      <input type="text" id="user-answer" placeholder="Your Answer" autocomplete="off">
+      <button type="button" onclick="checkAnswer()">Submit</button>
+    </form>
+    <p id="score"></p>
+  </div>
+
+  <script>
+    const questions = [
+      { question: 'What is the capital of France?', answer: 'Paris' },
+      { question: 'Which planet is known as the Red Planet?', answer: 'Mars' },
+      { question: 'Who wrote "Romeo and Juliet"?', answer: 'William Shakespeare' },
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const questionContainer = document.getElementById('question-container');
+      const userAnswerInput = document.getElementById('user-answer');
+      const scoreDisplay = document.getElementById('score');
+
+      if (currentQuestionIndex < questions.length) {
+        const currentQuestion = questions[currentQuestionIndex];
+        questionContainer.textContent = currentQuestion.question;
+        userAnswerInput.value = '';
+        scoreDisplay.textContent = `Score: ${score}`;
+      } else {
+        questionContainer.textContent = 'Quiz Completed!';
+        userAnswerInput.style.display = 'none';
+        document.querySelector('button').style.display = 'none';
+        scoreDisplay.textContent = `Final Score: ${score} out of ${questions.length}`;
+      }
+    }
+
+    function checkAnswer() {
+      const userAnswer = document.getElementById('user-answer').value.trim().toLowerCase();
+      const currentQuestion = questions[currentQuestionIndex];
+
+      if (userAnswer === currentQuestion.answer.toLowerCase()) {
+        score++;
+      }
+
+      currentQuestionIndex++;
+      loadQuestion();
+    }
+
+    window.onload = loadQuestion;
+  </script>
+</body>
+</html>
